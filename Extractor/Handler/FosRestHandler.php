@@ -81,6 +81,12 @@ class FosRestHandler implements HandlerInterface
             $class = get_class($requirements);
 
             return substr($class, strrpos($class, '\\')+1);
+        } elseif (is_array($requirements)) {
+            $results = [];
+            foreach ($requirements as $requirement) {
+                $results[] = $this->handleRequirements($requirement);
+            }
+            return implode(' & ', $results);
         }
 
         return (string) $requirements;
